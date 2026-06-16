@@ -1,8 +1,9 @@
 import { Scale, BarChart3 } from 'lucide-react';
-import { useDrillStore } from '@/store/useDrillStore';
+import { useViewStore } from '@/store/useViewStore';
 
 export default function CompareToggle() {
-  const { compareMode, setCompareMode } = useDrillStore();
+  const compareMode = useViewStore((s) => s.compareMode);
+  const setCompareMode = useViewStore((s) => s.setCompareMode);
 
   return (
     <button
