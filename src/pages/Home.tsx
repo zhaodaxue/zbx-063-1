@@ -28,9 +28,9 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="flex-1 flex items-center justify-center p-8">
-        <div className="flex items-start gap-10 max-w-5xl w-full justify-center">
-          <div className="flex-shrink-0">
+      <main className="flex-1 flex items-center justify-center p-4 md:p-8">
+        <div className="flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-10 max-w-5xl w-full justify-center">
+          <div className="flex-shrink-0 w-full md:w-auto flex justify-center">
             <PieChart />
           </div>
           <Sidebar />

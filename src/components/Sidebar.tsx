@@ -10,7 +10,7 @@ export default function Sidebar() {
   const totalWeight = useMemo(() => getTotalWeight(currentLevel), [currentLevel]);
 
   return (
-    <aside className="w-80 bg-white/60 backdrop-blur-sm rounded-2xl shadow-lg border border-amber-100 p-5 h-fit">
+    <aside className="w-full md:w-80 max-w-md md:max-w-none bg-white/60 backdrop-blur-sm rounded-2xl shadow-lg border border-amber-100 p-5 h-fit">
       <div className="mb-4 pb-4 border-b border-amber-100">
         <h2 className="text-lg font-bold text-amber-900 mb-1" style={{ fontFamily: "'Noto Serif SC', serif" }}>
           {currentParentName} · 明细
