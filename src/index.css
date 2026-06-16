@@ -49,3 +49,12 @@ body::before {
   position: relative;
   z-index: 1;
 }
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+  }
+}

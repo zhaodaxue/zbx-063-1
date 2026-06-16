@@ -12,6 +12,8 @@ interface DrillState {
   path: PathNode[];
   currentLevel: IngredientNode[];
   currentParentName: string;
+  compareMode: boolean;
+  setCompareMode: (enabled: boolean) => void;
   drillDown: (node: IngredientNode) => void;
   drillUp: () => void;
   goToLevel: (index: number) => void;
@@ -25,6 +27,8 @@ export const useDrillStore = create<DrillState>((set, get) => ({
   path: [rootPathNode],
   currentLevel: rootIngredients,
   currentParentName: ROOT_LABEL,
+  compareMode: false,
+  setCompareMode: (enabled: boolean) => set({ compareMode: enabled }),
 
   drillDown: (node: IngredientNode) => {
     if (!node.children || node.children.length === 0) return;

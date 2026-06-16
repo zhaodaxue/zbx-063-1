@@ -5,6 +5,15 @@ export interface PieSlice {
   startAngle: number;
   endAngle: number;
   percentage: number;
+  standardPercentage: number;
+  deviation: number;
+}
+
+export interface SliceDeviation {
+  percentage: number;
+  standardPercentage: number;
+  deviation: number;
+  hasWarning: boolean;
 }
 
 export function getContrastTextColor(hexColor: string): string {
@@ -18,24 +27,44 @@ export function getContrastTextColor(hexColor: string): string {
 
 export function calculateSlices(items: IngredientNode[]): PieSlice[] {
   const total = items.reduce((sum, item) => sum + item.weight, 0);
+  const standardTotal = items.reduce((sum, item) => sum + item.standardWeight, 0);
   if (total === 0) return [];
 
   const slices: PieSlice[] = [];
   let currentAngle = -Math.PI / 2;
 
   for (const item of items) {
-    const percentage = item.weight / total;
-    const angleSpan = percentage * Math.PI * 2;
+    const percentage = (item.weight / total) * 100;
+    const standardPercentage = standardTotal > 0 ? (item.standardWeight / standardTotal) * 100 : 0;
+    const angleSpan = (percentage / 100) * Math.PI * 2;
     slices.push({
       node: item,
       startAngle: currentAngle,
       endAngle: currentAngle + angleSpan,
-      percentage: percentage * 100,
+      percentage,
+      standardPercentage,
+      deviation: percentage - standardPercentage,
     });
     currentAngle += angleSpan;
   }
 
   return slices;
+}
+
+export function hasWarning(deviation: number): boolean {
+  return Math.abs(deviation) >= 3;
+}
+
+export function formatDeviation(value: number): string {
+  const formatted = value.toFixed(1);
+  return value > 0 ? `+${formatted}%` : `${formatted}%`;
+}
+
+export function getDeviationColor(deviation: number): string {
+  if (Math.abs(deviation) >= 3) {
+    return deviation > 0 ? '#DC2626' : '#DC2626';
+  }
+  return deviation > 0 ? '#D97706' : '#0891B2';
 }
 
 export function polarToCartesian(
